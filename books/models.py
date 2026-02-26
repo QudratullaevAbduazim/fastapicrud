@@ -10,3 +10,14 @@ class Book(Base):
     author = Column(String, index=True)
     price = Column(Integer)
     description = Column(Text, nullable=True)    
+    
+    
+    
+class Customer(Base):
+    __tablename__ = "customers"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(20), index=True)
+    email = Column(String, index=True, nullable=False)
+    password = Column(String, nullable=False)
+    username = Column(String(20), index=True, nullable=False)
