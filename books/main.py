@@ -3,7 +3,12 @@ import auth_router
 from products_router import router
 from database import engine, Base
 from models import Book
+from fastapi_jwt_auth2 import AuthJWT
+from schemas import Settings
 
+@AuthJWT.load_config
+def get_config():
+    return Settings()
 
 
 app = FastAPI()
