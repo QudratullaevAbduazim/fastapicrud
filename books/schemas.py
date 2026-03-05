@@ -54,6 +54,15 @@ class ResetPasswordSchema(BaseModel):
     new_password: str
     confirm_password: str
     
+    
+class CommentCreateSchema(BaseModel):
+    content: str
+    book_id: int
+    user_id: int
+    
+    class Config:
+        orm_mode = True
+    
 
     
     

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from schemas import SignUpSchema, LoginSchema, ProfileUpdateSchema, ResetPasswordSchema
+from schemas import SignUpSchema, LoginSchema, ProfileUpdateSchema, ResetPasswordSchema, CommentCreateSchema
 import auth
 from fastapi_jwt_auth2 import AuthJWT
 
@@ -44,3 +44,15 @@ def update_profile(update_data: ProfileUpdateSchema,db: Session = Depends(get_db
 @auth_router.put("/reset-password")
 def reset_password(password_data: ResetPasswordSchema,db: Session = Depends(get_db),Authorize: AuthJWT = Depends()):
     return auth.reset_password(db, Authorize, password_data)
+
+@auth_router.post("/comment")
+def create_comment(comment_data: CommentCreateSchema, db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+    return auth.create_comment(db, Authorize, comment_data)
+
+@auth_router.get("/comments")
+def get_comments(db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+    return auth.get_comments(db, Authorize)
+
+@auth_router.delete("/comment/{comment_id}")
+def delete_comment(comment_id: int, db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+    return auth.delete_comment(db, Authorize, comment_id)
